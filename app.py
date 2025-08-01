@@ -22,9 +22,9 @@ def check_dx():
         info = match.iloc[0]
         return jsonify({
             "match_type": "exact",
-            "eligible": info["Eligible"],
-            "group": info["Group"],
-            "description": info["Description"]
+            "eligible": bool(info["Eligible"]),
+            "group": str(info["Group"]),
+            "description": str(info["Description"])
         })
 
     choices = df['Description'].tolist()
