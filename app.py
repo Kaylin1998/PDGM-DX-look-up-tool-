@@ -34,9 +34,9 @@ def check_dx():
         "match_type": "fuzzy",
         "input": query,
         "suggested_description": best_match,
-        "eligible": info["Eligible"],
-        "group": info["Group"],
-        "description": info["Description"]
+        "eligible": bool(info["Eligible"]),
+        "group": str(info["Group"]),
+        "description": str(info["Description"])
     })
 
 @app.route("/bulk_check", methods=["POST"])
