@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDGM Dx Look Up Tool</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>PDGM Dx Look Up Tool</h1>
+  <p>Enter an ICD-10 code or diagnosis description below to check if it's PDGM-eligible.</p>
+  <input type="text" id="codeInput" placeholder="e.g., I10 or Hypertension">
+  <button onclick="checkCode()">Check</button>
+  <pre id="result"></pre>
+  <h2>Bulk Upload (CSV with 'ICD10_Code' column)</h2>
+  <input type="file" id="fileInput">
+  <button onclick="uploadCSV()">Upload</button>
+  <div id="bulkResult"></div>
+  <footer>
+    <p>© 2025 PDGM Dx Look Up Tool. All rights reserved.</p>
+  </footer>
+  <script>
+    async function checkCode() {
+      const code = document.getElementById('codeInput').value;
+      const res = await fetch('/check?code=' + encodeURIComponent(code));
+      const data = await res.json();
+      const container = document.getElementById('result');
+      if (data.eligible === true || data.eligible === "True") {
+        container.innerHTML = `<span class="result-green">✔️ ${data.description} — ${data.group}</span>`;
+      } else {
+        container.innerHTML = `<span class="result-red">❌ Not PDGM eligible (${data.description || data.message})</span>`;
+      }
+    }
+
+    async function uploadCSV() {
+      const file = document.getElementById('fileInput').files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/bulk_check', { method: 'POST', body: formData });
+      const data = await res.json();
+      let html = '<table><tr><th>Code</th><th>Eligible</th><th>Group</th><th>Description</th></tr>';
+      data.forEach(row => {
+        const resultClass = row.Eligible === true || row.Eligible === "True" ? 'result-green' : 'result-red';
+        html += `<tr><td>${row.ICD10_Code}</td><td class="${resultClass}">${row.Eligible ? '✔️ YES' : '❌ NO'}</td><td class="result-green">${row.Group || ''}</td><td>${row.Description}</td></tr>`;
+      });
+      html += '</table>';
+      document.getElementById('bulkResult').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

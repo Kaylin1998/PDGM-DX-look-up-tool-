@@ -1,0 +1,6 @@
+ICD10_Code,Description,Eligible,Group
+I10,Essential (primary) hypertension,True,Cardiovascular
+E11.9,Type 2 diabetes mellitus without complications,True,Endocrine
+M54.5,Low back pain,True,Musculoskeletal
+R51,Headache,False,
+J45.909,"Unspecified asthma, uncomplicated",True,Respiratory

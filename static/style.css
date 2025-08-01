@@ -1,0 +1,11 @@
+
+body { font-family: 'Segoe UI', sans-serif; background-color: #ffffff; color: #000; margin: 0; padding: 20px; }
+h1 { color: #007bff; }
+input, button { padding: 10px; margin: 5px; font-size: 16px; }
+button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+button:hover { background-color: #0056b3; }
+.result-green { color: #28a745; font-weight: bold; }
+.result-red { color: #dc3545; font-weight: bold; }
+table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #555; }
